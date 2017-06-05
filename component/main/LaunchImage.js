@@ -18,7 +18,7 @@ var Main = require('./KittyMain');
 
 var Launch = React.createClass({
     render() {
-        console.log("sssssssss")
+
         return (
             <Image source={{uri: 'launchimage'}} style={styles.launchImageStyle}/>
         );
@@ -28,8 +28,8 @@ var Launch = React.createClass({
     componentDidMount(){
         // 定时: 隔2s切换到KittyMain
         setTimeout(()=>{
-          this.props.navigation.navigate('KittyMain');
-        }, 1500);
+          this.props.navigation.navigate('MyApp');
+        }, 150);
     }
 });
 

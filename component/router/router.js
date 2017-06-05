@@ -3,7 +3,7 @@
 * Project: kitty_front
 * Comments:
 * Author:cbam
-* Create Date:2017/6/3
+* Create Date:2017/6/4
 * Modified By:
 * Modified Date: 
 * Modified Reason: 
@@ -16,12 +16,12 @@ import {
   View
 } from 'react-native';
 
-export default class Explore extends Component {
+export default class router extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text>
-          Explore
+          Welcome to React Native!
         </Text>
       </View>
     );
