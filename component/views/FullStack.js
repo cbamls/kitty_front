@@ -20,10 +20,10 @@ import {
 } from 'react-native';
 
 import { TabNavigator } from 'react-navigation';
-
+import LoadingPage from '../common/LoadingPage';
 class Tech1 extends Component {
  static navigationOptions = {
-     tabBarLabel: 'Tech1',
+     tabBarLabel: '全部',
      tabBarIcon: ({ tintColor }) => (
            <Image
              source={{uri: "icon_tabbar_merchant_normal"}}
@@ -32,13 +32,36 @@ class Tech1 extends Component {
       )
 
    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            data: {}
+        }
+    }
+    _setState(data) {
+        this.setState({"loading": false, "data": data});
+    }
+    fetchDataTech1() {
+        var data = [{"1": "_1"}, {"2": "_2"}];
+        this._setState(data);
+    }
+    componentDidMount() {
+        this.fetchDataTech1();
+    }
 
    render() {
      return (
-       <Button
+   <View>
+         {
+            this.state.loading ? <LoadingPage></LoadingPage> :  (null)
+         }
+     <Button
          onPress={() => this.props.navigation.goBack()}
          title="Go back home"
        />
+   </View>
+
      );
    }
 }
@@ -46,8 +69,7 @@ class Tech1 extends Component {
 
 class Tech2 extends Component {
  static navigationOptions = {
-     tabBarLabel: 'Tech2',
-
+     tabBarLabel: '后端',
      tabBarIcon: ({ tintColor }) => (
            <Image
              source={{uri: "icon_tabbar_merchant_normal"}}
@@ -71,8 +93,7 @@ class Tech2 extends Component {
 
 class Tech3 extends Component {
  static navigationOptions = {
-     tabBarLabel: 'Tech3',
-
+     tabBarLabel: '前端',
      tabBarIcon: ({ tintColor }) => (
            <Image
              source={{uri: "icon_tabbar_merchant_normal"}}
@@ -96,9 +117,8 @@ class Tech3 extends Component {
 
 class Tech4 extends Component {
   static navigationOptions = {
-      tabBarLabel: 'Tech4',
- title: 'Tech4',
-header :'screen',
+      tabBarLabel: 'Android',
+ title: 'Android',
       tabBarIcon: ({ tintColor }) => (
                <Image
                  source={{uri: 'icon_tabbar_homepage'}}
@@ -117,6 +137,53 @@ header :'screen',
       );
     }
 }
+
+class Tech5 extends Component {
+  static navigationOptions = {
+      tabBarLabel: '程序员',
+ title: '程序员',
+      tabBarIcon: ({ tintColor }) => (
+               <Image
+                 source={{uri: 'icon_tabbar_homepage'}}
+                 style={[styles.iconStyle, {tintColor: tintColor}]}
+               />
+          )
+    };
+
+    render() {
+      return (
+            <View>
+            <Text>32</Text>
+            <Image source={{uri: "icon_tabbar_homepage"}}
+                             style={styles.iconStyle}/>
+            </View>
+      );
+    }
+}
+
+class Tech6 extends Component {
+  static navigationOptions = {
+      tabBarLabel: 'Tech6',
+ title: 'Tech6',
+      tabBarIcon: ({ tintColor }) => (
+               <Image
+                 source={{uri: 'icon_tabbar_homepage'}}
+                 style={[styles.iconStyle, {tintColor: tintColor}]}
+               />
+          )
+    };
+
+    render() {
+      return (
+            <View>
+            <Text>32</Text>
+            <Image source={{uri: "icon_tabbar_homepage"}}
+                             style={styles.iconStyle}/>
+            </View>
+      );
+    }
+}
+
 const styles = StyleSheet.create({
     iconStyle:{
         width: Platform.OS === 'ios' ? 30 : 25,
@@ -138,6 +205,12 @@ const FullStack = TabNavigator({
      Tech4: {
         screen: Tech4,
       },
+         Tech5: {
+              screen: Tech5,
+            },
+               Tech6: {
+                    screen: Tech6,
+                  },
 },
 
 
@@ -146,14 +219,16 @@ const FullStack = TabNavigator({
     activeTintColor: '#e91e63',
     showLabel:true,
     showIcon : false,
+    scrollEnabled: true,
     labelStyle: {
          fontSize: 10,
     },
     style: {
-        backgroundColor: 'grey',
+        backgroundColor: '#2296F3',
     },
      tabStyle: {
         height: 40,
+        width:90
       }
   },
 });

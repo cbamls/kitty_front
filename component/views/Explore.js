@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 
 import { TabNavigator } from 'react-navigation';
-import FullStack from '../fullStack/FullStack';
 
 class Explore extends Component {
  static navigationOptions = {
@@ -37,7 +36,7 @@ class Explore extends Component {
    render() {
      return (
        <Button
-         onPress={() => this.props.navigation.goBack()}
+         onPress={() => this.props.navigation.navigate("KittyLogin")}
          title="Go back home"
        />
      );

@@ -24,20 +24,69 @@ var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
 
 export default class KittyNavBar extends Component {
+
+        constructor(props) {
+                super(props);
+                this.state = {
+                    "rightIcon": 'icon_homepage_scan',
+                     "leftIcon": ''
+                };
+            }
  // 跳转到二级界面
           pushToDetail(data){
               // alert(data);
-             this.props.navigation.navigate('SearchDetail', {handleTextBlur: this.handleTextBlur.bind(this)});
+             this.props.navigation.navigate("SearchDetail", {handleTextBlur: this.handleTextBlur.bind(this)});
           }
 
           handleTextBlur() {
             this.refs.textInput.blur();
           }
+
+           componentWillReceiveProps(nextProps) {
+                  this.setState({
+                      "leftText":"IT喵~",
+                      "rightIcon": nextProps.rightIcon,
+                      "leftIcon": nextProps.leftIcon
+                  })
+           }
+
+          fechData() {
+          alert("feachData");
+                let formData = new FormData();
+                 let url = "https://api.leancloud.cn/1.1/classes/Entry?&where=%7B%22type%22%3A%22post%22%2C%22createdAt%22%3A%7B%22%24gte%22%3A%7B%22__type%22%3A%22Date%22%2C%22iso%22%3A%222017-05-29T13%3A41%3A27.866Z%22%7D%7D%7D&include=user&limit=6&order=-hotIndex";
+                fetch(url , {
+                     method: 'GET',
+                     headers: new Headers({
+                     'User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+                             'Accept':'*/*',
+                             'Content-Type': 'application/json;charset=utf-8',
+                             'Host':'api.leancloud.cn',
+                             'X-LC-UA':'AV/js1.5.4',
+                             'X-LC-Sign':'b58eb47ad78a923f8f10271db7ab88d8,1496670087966',
+                                'Accept-Language':'zh-CN,zh;q=0.8,en;q=0.6',
+
+                             'X-LC-Id':'mhke0kuv33myn4t4ghuid4oq2hjj12li374hvcif202y5bm6'
+                         })
+                     }
+                ).then((response) => {
+                    alert("response.ok => " + response.ok);
+                     if (response.ok) {
+                            return response.json()
+                     } else {
+                             alert("notok" );
+
+                        }
+                     }
+                ).catch((error) => {
+                 console.error(error);
+                 }
+                );
+          }
   render() {
     return (
       <View style={styles.navBarStyle}>
                                    {/*左边*/}
-                                    <Text style={{color:'white'}}>喵喵~</Text>
+                                    <Text style={{color:'white', marginLeft: 2}}>this.state.leftText</Text>
                                    {/*中间*/}
                                    <View style={styles.searchBoxStyle}>
                                        <Image source={{uri:'ic_search_grey_400_24dp'}} style={styles.searchStyle}/>
@@ -51,11 +100,11 @@ export default class KittyNavBar extends Component {
                                    </View>
                                    {/*右边*/}
                                    <View style={styles.rightNavViewStyle}>
-                                       <TouchableOpacity onPress={()=>{alert('点击了')}}>
-                                           <Image source={{uri:'icon_homepage_message'}} style={styles.navRightImgStyle}/>
-                                       </TouchableOpacity>
+//                                       <TouchableOpacity onPress={()=>{this.fechData()}}>
+//                                           <Image source={{uri:'icon_homepage_message'}} style={styles.navRightImgStyle}/>
+//                                       </TouchableOpacity>
                                        <TouchableOpacity onPress={()=>this.handleTextBlur()}>
-                                           <Image source={{uri:'icon_homepage_scan'}} style={styles.navRightImgStyle} />
+                                           <Image source={{uri:this.state.rightIcon}} style={styles.navRightImgStyle} />
                                        </TouchableOpacity>
                                    </View>
 
@@ -68,7 +117,7 @@ export default class KittyNavBar extends Component {
 const styles = StyleSheet.create({
     navBarStyle:{ // 导航条样式
         height: Platform.OS == 'ios' ? 64 : 44,
-        backgroundColor:'rgba(255,96,0,1.0)',
+        backgroundColor:'#2296F3',
 
         // 设置主轴的方向
         flexDirection:'row',
@@ -90,7 +139,6 @@ const styles = StyleSheet.create({
     topInputStyle:{ // 设置输入框
      backgroundColor:'transparent',
         flex:1,
-
     },
 
     navRightImgStyle:{ // 设置图片的大小

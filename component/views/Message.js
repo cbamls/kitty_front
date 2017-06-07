@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 
 import { TabNavigator } from 'react-navigation';
-import FullStack from '../fullStack/FullStack';
 
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');

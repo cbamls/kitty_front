@@ -13,8 +13,6 @@ import {
     Image
 } from 'react-native';
 
-/**----导入外部的组件----**/
-var Main = require('./KittyMain');
 
 var Launch = React.createClass({
     render() {
@@ -29,7 +27,7 @@ var Launch = React.createClass({
         // 定时: 隔2s切换到KittyMain
         setTimeout(()=>{
           this.props.navigation.navigate('MyApp');
-        }, 150);
+        }, 15);
     }
 });
 

@@ -23,13 +23,13 @@ var Dimensions = require('Dimensions');
 var {width} = Dimensions.get('window');
 
 // 引入计时器类库
-var TimerMixin = require('react-timer-mixin');
+import TimerMixin from 'react-timer-mixin';
 
 // 引入json数据
 var ImageData = require('./ImageData.json');
 
 
-var ScrollView = React.createClass({
+var TopScrollView = React.createClass({
 
     // 注册计时器
     mixins: [TimerMixin],
@@ -42,7 +42,7 @@ var ScrollView = React.createClass({
        }
     },
 
-    // 设置可变的和初始值
+
     getInitialState(){
        return{
           // 当前的页码
@@ -51,7 +51,6 @@ var ScrollView = React.createClass({
     },
     componentWillUnMount() {
         this.timer && clearTimeout(this.timer);
-        this.timer2 && clearTimeout(this.timer2)
     },
     render(){
        return(
@@ -192,7 +191,7 @@ var ScrollView = React.createClass({
 
 const styles = StyleSheet.create({
   container:{
-      marginTop:25
+
   },
 
   pageViewStyle:{
@@ -207,8 +206,9 @@ const styles = StyleSheet.create({
       // 设置主轴的方向
       flexDirection:'row',
       // 设置侧轴方向的对齐方式
-      alignItems:'center'
+      alignItems:'center',
+      justifyContent: 'center'
   }
 });
 
-export default ScrollView;
+export default TopScrollView;

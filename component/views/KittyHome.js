@@ -17,40 +17,54 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
-  Image
+  Image,
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 
-import ScrollView from './ScrollView';
-import KittyNavBar from './KittyNavBar';
+import TopScrollView from '../business/home/TopScrollView';
+import KittyNavBar from '../business/home/KittyNavBar';
+import ModuleList from '../business/home/ModuleList';
+import HomeMidListView from '../business/home/HomeMidListView';
+
+
+// 导入json数据
+var Wine = require('../business/home/Wine.json'); // 数组
 
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
 
 export default class KittyHome extends Component {
+
    static navigationOptions = {
         tabBarLabel: 'Home',
         title: 'MyHome',
          header :'screen',
         tabBarIcon: ({ tintColor }) => (
                  <Image
-                   source={{uri: 'icon_tabbar_homepage'}}
+                   source={{uri: 'kitty_ic_home_grey_400_24dp'}}
                    style={[styles.iconStyle, {tintColor: tintColor}]}
                  />
             )
       };
 
       render() {
+
         return (
-               <View style={styles.container}>
-                              {/*首页的导航条*/}
-                              <KittyNavBar></KittyNavBar>
+            <View style = {{flex: 1}}>
 
-             </View>
-
+              <KittyNavBar navigation={this.props.navigation}> </KittyNavBar>
+              <HomeMidListView navigation={this.props.navigation}></HomeMidListView>
+            </View>
         );
       }
-
 
 }
 
 
+const styles = StyleSheet.create({
+    iconStyle:{
+        width: Platform.OS === 'ios' ? 30 : 25,
+        height:Platform.OS === 'ios' ? 30 : 25
+    }
+});
