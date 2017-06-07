@@ -29,7 +29,8 @@ export default class KittyNavBar extends Component {
                 super(props);
                 this.state = {
                     "rightIcon": 'icon_homepage_scan',
-                     "leftIcon": ''
+                     "leftIcon": '',
+                     "leftText":'IT喵~'
                 };
             }
  // 跳转到二级界面
@@ -51,7 +52,7 @@ export default class KittyNavBar extends Component {
            }
 
           fechData() {
-          alert("feachData");
+
                 let formData = new FormData();
                  let url = "https://api.leancloud.cn/1.1/classes/Entry?&where=%7B%22type%22%3A%22post%22%2C%22createdAt%22%3A%7B%22%24gte%22%3A%7B%22__type%22%3A%22Date%22%2C%22iso%22%3A%222017-05-29T13%3A41%3A27.866Z%22%7D%7D%7D&include=user&limit=6&order=-hotIndex";
                 fetch(url , {
@@ -86,7 +87,19 @@ export default class KittyNavBar extends Component {
     return (
       <View style={styles.navBarStyle}>
                                    {/*左边*/}
-                                    <Text style={{color:'white', marginLeft: 2}}>this.state.leftText</Text>
+
+                                    {
+
+                                         this.state.leftText ?
+                                         <Text style={{color:'white', marginLeft: 2}}>
+                                           {this.state.leftText}
+                                         </Text>
+                                         :
+
+                                         <Image source={{uri: this.state.leftIcon}} style={{width: 20, height: 20}}/>
+
+                                     }
+
                                    {/*中间*/}
                                    <View style={styles.searchBoxStyle}>
                                        <Image source={{uri:'ic_search_grey_400_24dp'}} style={styles.searchStyle}/>
@@ -100,9 +113,7 @@ export default class KittyNavBar extends Component {
                                    </View>
                                    {/*右边*/}
                                    <View style={styles.rightNavViewStyle}>
-//                                       <TouchableOpacity onPress={()=>{this.fechData()}}>
-//                                           <Image source={{uri:'icon_homepage_message'}} style={styles.navRightImgStyle}/>
-//                                       </TouchableOpacity>
+
                                        <TouchableOpacity onPress={()=>this.handleTextBlur()}>
                                            <Image source={{uri:this.state.rightIcon}} style={styles.navRightImgStyle} />
                                        </TouchableOpacity>

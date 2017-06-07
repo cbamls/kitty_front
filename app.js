@@ -26,7 +26,7 @@ import { TabNavigator } from 'react-navigation';
 import SearchDetail from './component/business/home/SearchDetail';
 import LaunchImage from './component/business/main/LaunchImage';
 
-import FullStack from './component/views/FullStack';
+import FullStackView from './component/views/FullStackView';
 import KittyHome from './component/views/KittyHome';
 import Explore from './component/views/Explore';
 import Message from './component/views/Message';
@@ -82,8 +82,8 @@ const SimpleApp = StackNavigator({
       },
   initialRouteName : {screen: LaunchImage},
   LaunchImage: { screen: LaunchImage },
-FullStack:{
-   screen: FullStack
+FullStackView:{
+   screen: FullStackView
 },
 
   SearchDetail: {

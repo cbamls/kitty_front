@@ -26,7 +26,7 @@ export default class ModuleList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("FullStack")}}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("FullStackView", {name:'jane'})}}>
              <View style={{alignItems: 'center'}}>
                           <Image source={{uri: 'kitty_article_list_600'}} style={styles.imgStyle}/>
                           <Text style={styles.collectionStyle}>技能GET</Text>

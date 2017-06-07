@@ -3,12 +3,11 @@
 * Project: kitty_front
 * Comments:
 * Author:cbam
-* Create Date:2017/6/6
+* Create Date:2017/6/7
 * Modified By:
-* Modified Date:
-* Modified Reason:
+* Modified Date: 
+* Modified Reason: 
 */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -23,42 +22,17 @@ ActivityIndicator,
 } from 'react-native';
 var Dimensions = require('Dimensions');
 var {width} = Dimensions.get('window');
-// 导入json数据
-var Wine = require('./Wine.json'); // 数组
-
+import ArticleCell from '../common/ArticleCell';
 import {PullList} from 'react-native-pull';
-import TopScrollView from './TopScrollView';
-import ModuleList from './ModuleList';
-export default class HomeMidListView extends Component {
+
+var MockData = require('./FullStackMock.json');
+
+export default class PullRefresh extends Component {
 
 	constructor(props) {
         super(props);
-        this.dataSource = [{
-                                                             "image": "a",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                             "image": "b",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                             "image": "c",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                                                                                        "image": "a",
-                                                                                                                                        "money": "1230",
-                                                                                                                                        "name": "爱之湾+兰贵人组合"
-                                                                                                                      },
-                                                                                                                      {
-                                                                                                                        "image": "b",
-                                                                                                                                        "money": "1230",
-                                                                                                                                        "name": "爱之湾+兰贵人组合"
-                                                                                                                      }
-                                                                                                                      ];
+        this.dataSource = [];
+        this.firstRender = true;
         this.state = {
             list: (new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})).cloneWithRows(this.dataSource),
         };
@@ -67,16 +41,34 @@ export default class HomeMidListView extends Component {
         this.renderFooter = this.renderFooter.bind(this);
         this.loadMore = this.loadMore.bind(this);
         this.topIndicatorRender = this.topIndicatorRender.bind(this);
-        // this.loadMore();
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+           console.log("update");
+          return this.firstRender ? true : false;
+          if(this.firstRender) {
+                 this.firstRender = false;
+                    this.dataSource.push(...(nextProps.data));
+                             this.setState({
+                                list: this.state.list.cloneWithRows(this.dataSource)
+                             })
+                             return true;
+          }
+          return false;
     }
 
-    onPullRelease(resolve) {
-		//do something
-		setTimeout(() => {
-            resolve();
-        }, 2000);
-    }
+//     componentWillReceiveProps(nextProps) {
+//                       console.log("receive");
+//
+//
+//      }
+    componentDidMount() {console.log("did");
+        //alert("this => " + this.props.data.length);
 
+         this.dataSource.push(...(this.props.data));
+                    this.setState({
+                       list: this.state.list.cloneWithRows(this.dataSource)
+         })
+    }
 	topIndicatorRender(pulling, pullok, pullrelease) {
         const hide = {position: 'absolute', left: -10000};
         const show = {position: 'relative', left: 0};
@@ -97,7 +89,7 @@ export default class HomeMidListView extends Component {
         }, 1);
 		return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 60}}>
-                <Image source= {require('./img/pullView.gif')} style = {{width: 60, height: 60}}/>
+                <Image source= {require('../business/home/img/pullView.gif')} style = {{width: 60, height: 60}}/>
                  <Text ref={(c) => {this.txtPulling = c;}}>下拉上刷新 </Text>
                 <Text ref={(c) => {this.txtPullok = c;}}>禽兽 放开我</Text>
                  <Text ref={(c) => {this.txtPullrelease = c;}}>刷~ </Text>
@@ -128,42 +120,15 @@ export default class HomeMidListView extends Component {
     renderHeader() {
       return (
           <View>
-              <TopScrollView></TopScrollView>
-              <ModuleList navigation={this.props.navigation}></ModuleList>
-              <View style={styles.TopListStyle}>
-              	<View style={styles.TopLeftStyle}>
-              	   <Image source={{uri: 'rm'}} style={{width: 25, height: 25}}/>
-              		<Text>热门文章</Text>
-              	</View>
-              	<TouchableOpacity style={styles.TopRightStyle} activeOpacity={0.5} onPress={() => alert("label ok")}>
-              		<Image source={{uri: 'kitty_ic_label_grey_300_24dp'}} style={{width: 25, height: 25}}/>
-              		<Text style={{color: '#E0E0E0'}}>
-              			标签管理
-              		</Text>
-              	</TouchableOpacity>
-              </View>
           </View>
       );
     }
 
     // 返回具体的cell
         renderRow(rowData,sectionID,rowID,highlightRow){
-
                return(
-                      <TouchableOpacity activeOpacity={0.5} onPress={()=>{alert('点击了'+rowID+'行')}}>
-                        <View style={styles.cellViewStyle}>
-                          {/*左边的图片*/}
-                          <Image source={{uri: rowData.image}} style={styles.leftImageStyle}/>
-                          {/*右边的View*/}
-                          <View style={styles.rightViewStyle}>
-                            {/*上边的Text*/}
-                            <Text style={styles.topTitleStyle}>{rowData.name}</Text>
-                            {/*下边的Text*/}
-                            <Text style={styles.bottomTitleStyle}>¥{rowData.money}</Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    );
+                  <ArticleCell date={rowData.date} title={rowData.title} subTitle={rowData.subTitle} author={rowData.author} avatar={rowData.avatar} imgUrl={rowData.imgUrl}></ArticleCell>
+               );
 
         }
 
@@ -180,8 +145,8 @@ export default class HomeMidListView extends Component {
 
     loadMore() {
 
-        this.dataSource.push(...Wine);
-         alert("load More => " + this.dataSource.length);
+        {/*this.dataSource.push(...Wine);*/}
+
         setTimeout(() => {
             this.setState({
                 list: this.state.list.cloneWithRows(this.dataSource)

@@ -21,6 +21,10 @@ import {
 
 import { TabNavigator } from 'react-navigation';
 import LoadingPage from '../common/LoadingPage';
+import PullRefresh from '../common/PullRefresh';
+
+var MockData = require('./FullStackMock.json');
+
 class Tech1 extends Component {
  static navigationOptions = {
      tabBarLabel: '全部',
@@ -50,20 +54,25 @@ class Tech1 extends Component {
         this.fetchDataTech1();
     }
 
+
+    _onPullRelease(resolve) {
+   		//do something
+   		setTimeout(() => {
+               resolve();
+           }, 2000);
+       }
    render() {
      return (
-   <View>
-         {
-            this.state.loading ? <LoadingPage></LoadingPage> :  (null)
-         }
-     <Button
-         onPress={() => this.props.navigation.goBack()}
-         title="Go back home"
-       />
-   </View>
+           <View style = {styles.container}>
+                 {
+                    this.state.loading ? <LoadingPage></LoadingPage> :  (null)
+                 }
+                 <PullRefresh data = {MockData} onPullRelease={this._onPullRelease.bind(this)}></PullRefresh>
+           </View>
 
      );
    }
+
 }
 
 
@@ -141,7 +150,7 @@ class Tech4 extends Component {
 class Tech5 extends Component {
   static navigationOptions = {
       tabBarLabel: '程序员',
- title: '程序员',
+      title: '程序员',
       tabBarIcon: ({ tintColor }) => (
                <Image
                  source={{uri: 'icon_tabbar_homepage'}}
@@ -185,6 +194,10 @@ class Tech6 extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+       flex: 1,
+       backgroundColor: 'white'
+    },
     iconStyle:{
         width: Platform.OS === 'ios' ? 30 : 25,
         height:Platform.OS === 'ios' ? 30 : 25
