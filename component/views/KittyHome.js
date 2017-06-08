@@ -21,6 +21,7 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native';
+import BarcodeScanner from './MyBarcodeScanner';
 
 import TopScrollView from '../business/home/TopScrollView';
 import KittyNavBar from '../business/home/KittyNavBar';
@@ -28,8 +29,7 @@ import ModuleList from '../business/home/ModuleList';
 import HomeMidListView from '../business/home/HomeMidListView';
 
 
-// 导入json数据
-var Wine = require('../business/home/Wine.json'); // 数组
+import AlertModal from '../common/AlertModal';
 
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -52,7 +52,7 @@ export default class KittyHome extends Component {
 
         return (
             <View style = {{flex: 1}}>
-
+             {/* <AlertModal ref="alertModal" visible={true}></AlertModal>*/}
               <KittyNavBar navigation={this.props.navigation}> </KittyNavBar>
               <HomeMidListView navigation={this.props.navigation}></HomeMidListView>
             </View>

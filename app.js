@@ -33,6 +33,7 @@ import Message from './component/views/Message';
 import Center from './component/views/Center';
 import KittyLogin from './component/views/KittyLogin';
 import HomeMidListView from './component/business/home/HomeMidListView';
+import BarcodeScanner from './component/views/MyBarcodeScanner';
 
 import { StackNavigator} from 'react-navigation';
 
@@ -56,7 +57,7 @@ const MyApp = TabNavigator({
  {
   tabBarOptions: {
     activeTintColor: '#e91e63',
-    showLabel:true,
+    showLabel:false,
     showIcon : true,
     labelStyle: {
          fontSize: 10,
@@ -65,7 +66,7 @@ const MyApp = TabNavigator({
         backgroundColor: '#2296F3',
     },
      tabStyle: {
-        height: 60,
+        height: 50,
       }
   },
   tabBarPosition : 'bottom',
@@ -92,6 +93,8 @@ FullStackView:{
   },
   KittyLogin: {
     screen: KittyLogin
+  },BarcodeScanner: {
+    screen: BarcodeScanner
   }
 
 },

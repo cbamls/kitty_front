@@ -19,6 +19,7 @@ import {
   TextInput,
   Image
 } from 'react-native';
+import BarcodeScanner from '../../views/MyBarcodeScanner';
 
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -86,21 +87,16 @@ export default class KittyNavBar extends Component {
   render() {
     return (
       <View style={styles.navBarStyle}>
-                                   {/*左边*/}
 
                                     {
-
                                          this.state.leftText ?
                                          <Text style={{color:'white', marginLeft: 2}}>
                                            {this.state.leftText}
                                          </Text>
                                          :
-
                                          <Image source={{uri: this.state.leftIcon}} style={{width: 20, height: 20}}/>
-
                                      }
 
-                                   {/*中间*/}
                                    <View style={styles.searchBoxStyle}>
                                        <Image source={{uri:'ic_search_grey_400_24dp'}} style={styles.searchStyle}/>
                                         <TextInput
@@ -111,10 +107,8 @@ export default class KittyNavBar extends Component {
                                          onFocus = {()=>{this.pushToDetail()}}
                                        />
                                    </View>
-                                   {/*右边*/}
                                    <View style={styles.rightNavViewStyle}>
-
-                                       <TouchableOpacity onPress={()=>this.handleTextBlur()}>
+                                       <TouchableOpacity onPress={()=>this.props.navigation.navigate("BarcodeScanner")}>
                                            <Image source={{uri:this.state.rightIcon}} style={styles.navRightImgStyle} />
                                        </TouchableOpacity>
                                    </View>

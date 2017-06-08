@@ -30,7 +30,7 @@ class Message extends Component {
      tabBarLabel: 'Message',
      tabBarIcon: ({ tintColor }) => (
            <Image
-             source={{uri: "icon_tabbar_mine_selected"}}
+             source={{uri: "icon_homepage_message"}}
              style={[styles.iconStyle, {tintColor: tintColor}]}
            />
       )

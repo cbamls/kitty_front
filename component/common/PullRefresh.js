@@ -35,6 +35,7 @@ export default class PullRefresh extends Component {
         this.firstRender = true;
         this.state = {
             list: (new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})).cloneWithRows(this.dataSource),
+            isLastPage: false
         };
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
@@ -49,7 +50,8 @@ export default class PullRefresh extends Component {
                  this.firstRender = false;
                     this.dataSource.push(...(nextProps.data));
                              this.setState({
-                                list: this.state.list.cloneWithRows(this.dataSource)
+                                list: this.state.list.cloneWithRows(this.dataSource),
+                                isLastPage: this.props.isLastPage
                              })
                              return true;
           }
@@ -66,7 +68,8 @@ export default class PullRefresh extends Component {
 
          this.dataSource.push(...(this.props.data));
                     this.setState({
-                       list: this.state.list.cloneWithRows(this.dataSource)
+                       list: this.state.list.cloneWithRows(this.dataSource),
+                       isLastPage: this.props.isLastPage
          })
     }
 	topIndicatorRender(pulling, pullok, pullrelease) {
@@ -133,8 +136,10 @@ export default class PullRefresh extends Component {
         }
 
     renderFooter() {
-      if(this.state.nomore) {
-          return null;
+      if(this.state.isLastPage) {
+          return (
+            <Text style={{height: 100}}>没有更多数据...</Text>
+          );
       }
       return (
           <View style={{height: 100}}>

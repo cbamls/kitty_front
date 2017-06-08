@@ -67,7 +67,7 @@ class Tech1 extends Component {
                  {
                     this.state.loading ? <LoadingPage></LoadingPage> :  (null)
                  }
-                 <PullRefresh data = {MockData} onPullRelease={this._onPullRelease.bind(this)}></PullRefresh>
+                 <PullRefresh data = {MockData} isLastPage={true}  onPullRelease={this._onPullRelease.bind(this)}></PullRefresh>
            </View>
 
      );

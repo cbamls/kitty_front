@@ -24,43 +24,21 @@ ActivityIndicator,
 var Dimensions = require('Dimensions');
 var {width} = Dimensions.get('window');
 // 导入json数据
-var Wine = require('./Wine.json'); // 数组
+var Article = require('./Article.json'); // 数组
 
 import {PullList} from 'react-native-pull';
 import TopScrollView from './TopScrollView';
 import ModuleList from './ModuleList';
+import HomeListCell from '../../common/HomeListCell';
+
 export default class HomeMidListView extends Component {
 
 	constructor(props) {
         super(props);
-        this.dataSource = [{
-                                                             "image": "a",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                             "image": "b",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                             "image": "c",
-                                                                             "money": "1230",
-                                                                             "name": "爱之湾+兰贵人组合"
-                                                           },
-                                                           {
-                                                                                                                        "image": "a",
-                                                                                                                                        "money": "1230",
-                                                                                                                                        "name": "爱之湾+兰贵人组合"
-                                                                                                                      },
-                                                                                                                      {
-                                                                                                                        "image": "b",
-                                                                                                                                        "money": "1230",
-                                                                                                                                        "name": "爱之湾+兰贵人组合"
-                                                                                                                      }
-                                                                                                                      ];
+        this.dataSource = [];
         this.state = {
             list: (new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})).cloneWithRows(this.dataSource),
+            isLastPage: false
         };
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
@@ -70,13 +48,29 @@ export default class HomeMidListView extends Component {
         // this.loadMore();
     }
 
+     componentDidMount() {
+            console.log("did");
+
+            this._fetchData();
+     }
     onPullRelease(resolve) {
 		//do something
 		setTimeout(() => {
             resolve();
         }, 2000);
     }
-
+    _fetchData() {
+        //alert("this => " + this.props.data.length);
+         this.dataSource.push(...Article.data);
+         console.log("length =>" + this.dataSource.length);
+         this._setState(Article);
+    }
+    _setState(newState) {
+         this.setState({
+               list: this.state.list.cloneWithRows(this.dataSource),
+               isLastPage: newState.isLastPage
+         })
+    }
 	topIndicatorRender(pulling, pullok, pullrelease) {
         const hide = {position: 'absolute', left: -10000};
         const show = {position: 'relative', left: 0};
@@ -108,6 +102,7 @@ export default class HomeMidListView extends Component {
     render() {
         return (
           <View style={styles.container}>
+
               <PullList
                   style={{}}
                   onPullRelease={this.onPullRelease}
@@ -148,28 +143,18 @@ export default class HomeMidListView extends Component {
 
     // 返回具体的cell
         renderRow(rowData,sectionID,rowID,highlightRow){
-
+               console.log("rowData => " + rowData.title);
                return(
-                      <TouchableOpacity activeOpacity={0.5} onPress={()=>{alert('点击了'+rowID+'行')}}>
-                        <View style={styles.cellViewStyle}>
-                          {/*左边的图片*/}
-                          <Image source={{uri: rowData.image}} style={styles.leftImageStyle}/>
-                          {/*右边的View*/}
-                          <View style={styles.rightViewStyle}>
-                            {/*上边的Text*/}
-                            <Text style={styles.topTitleStyle}>{rowData.name}</Text>
-                            {/*下边的Text*/}
-                            <Text style={styles.bottomTitleStyle}>¥{rowData.money}</Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
+                        <HomeListCell data={rowData}></HomeListCell>
                     );
 
         }
 
     renderFooter() {
-      if(this.state.nomore) {
-          return null;
+      if(this.state.isLastPage) {
+           return (
+                      <Text style={{height: 100}}>没有更多数据...</Text>
+                    );
       }
       return (
           <View style={{height: 100}}>
@@ -180,12 +165,8 @@ export default class HomeMidListView extends Component {
 
     loadMore() {
 
-        this.dataSource.push(...Wine);
-         alert("load More => " + this.dataSource.length);
         setTimeout(() => {
-            this.setState({
-                list: this.state.list.cloneWithRows(this.dataSource)
-            });
+            this._fetchData();
         }, 1000);
     }
 
@@ -197,38 +178,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#e8e8e8'
         },
 
-        cellViewStyle:{
-              padding:10,
-              backgroundColor:'white',
-              // 下划线
-              borderBottomWidth:0.5,
-              borderBottomColor:'#e8e8e8',
 
-              // 确定主轴的方向
-              flexDirection:'row'
-          },
-
-          leftImageStyle:{
-            width:60,
-            height:60,
-            marginRight:15
-          },
-
-          rightViewStyle:{
-             // 主轴的对齐方式
-             justifyContent:'center'
-          },
-
-          topTitleStyle:{
-             color:'red',
-             fontSize:15,
-             width:width * 0.7,
-             marginBottom:8
-          },
-
-          bottomTitleStyle:{
-            color:'blue',
-          },
         iconStyle:{
             width: Platform.OS === 'ios' ? 30 : 25,
             height:Platform.OS === 'ios' ? 30 : 25

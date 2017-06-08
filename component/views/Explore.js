@@ -26,7 +26,7 @@ class Explore extends Component {
      tabBarLabel: 'Explore',
      tabBarIcon: ({ tintColor }) => (
            <Image
-             source={{uri: "icon_tabbar_merchant_normal"}}
+             source={{uri: "kitty_ic_search_white_24dp"}}
              style={[styles.iconStyle, {tintColor: tintColor}]}
            />
       )
