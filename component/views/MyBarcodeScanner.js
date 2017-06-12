@@ -18,31 +18,42 @@ import {
 import BarcodeScanner from 'react-native-barcodescanner';
 
 export default class BarcodeScannerApp extends Component {
+
   constructor(props) {
     super(props);
-
+    console.log("this.props22222 =>  " + this.props);
+    this.res = this.props;
     this.state = {
       torchMode: 'off',
       cameraType: 'back',
+      uri: ""
     };
   }
-
+   test() {
+    console.log("test => " + this.props);
+    return this.props;
+   }
   barcodeReceived(e) {
     console.log('Barcode: ' + e.data);
     console.log('Type: ' + e.type);
-    window.location.href = "http://www.baidu.com";
-  }
-
+    var reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+    if(reg.test(e.data)){
+       this.props.navigation.navigate('ScanResultView', {uri: e.data});
+    } else {
+       this.props.navigation.navigate('ScanResultView', {data: e.data});
+    }
+}
   render() {
     return (
       <BarcodeScanner
-        onBarCodeRead={this.barcodeReceived}
+        onBarCodeRead={this.barcodeReceived.bind(this)}
          style={styles.camera}
         torchMode={this.state.torchMode}
         cameraType={this.state.cameraType}>
 
         <View style={styles.rectangleContainer}>
                             <View style={styles.rectangle} />
+
                         </View>
       </BarcodeScanner>
     );

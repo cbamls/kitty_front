@@ -45,7 +45,7 @@ export default class ArticleDetail extends Component {
             <WebView
 
             onLoadEnd={this._onLoadEnd.bind(this)}
-                     style={{width:width,height:height-20,backgroundColor:'gray'}}
+                     style={{width:width,height:height-20,backgroundColor:'white'}}
                      source={{uri: uri,method: 'GET'}}
                      javaScriptEnabled={true}
                      domStorageEnabled={true}

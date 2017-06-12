@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
       // backgroundColor:'blue',
       height:64,
       // 设置侧轴的对齐方式
-      alignItems:'center'
+      alignItems:'center',
+      marginRight: 10
     },
 
     topInputStyle:{ // 设置输入框

@@ -27,7 +27,7 @@ var Launch = React.createClass({
         // 定时: 隔2s切换到KittyMain
         setTimeout(()=>{
           this.props.navigation.navigate('MyApp');
-        }, 15);
+        }, 2000);
     }
 });
 
