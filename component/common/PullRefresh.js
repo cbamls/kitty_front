@@ -35,28 +35,29 @@ export default class PullRefresh extends Component {
         this.firstRender = true;
         this.state = {
             list: (new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})).cloneWithRows(this.dataSource),
-            isLastPage: false
+            isLastPage: false,
+            count: 0
         };
-        this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this.loadMore = this.loadMore.bind(this);
         this.topIndicatorRender = this.topIndicatorRender.bind(this);
     }
-    shouldComponentUpdate(nextProps, nextState) {
-           console.log("update");
-          return this.firstRender ? true : false;
-          if(this.firstRender) {
-                 this.firstRender = false;
-                    this.dataSource.push(...(nextProps.data));
-                             this.setState({
-                                list: this.state.list.cloneWithRows(this.dataSource),
-                                isLastPage: this.props.isLastPage
-                             })
-                             return true;
-          }
-          return false;
-    }
+//    shouldComponentUpdate(nextProps, nextState) {
+//           console.log("update");
+//          return this.firstRender ? true : false;
+//          if(this.firstRender) {
+//                 this.firstRender = false;
+//                    this.dataSource.push(...(nextProps.data));
+//                    console.log("this.dataSource => " + this.dataSource);
+//                             this.setState({
+//                                list: this.state.list.cloneWithRows(this.dataSource),
+//                                isLastPage: this.props.isLastPage
+//                             })
+//                             return true;
+//          }
+//          return false;
+//    }
 
 //     componentWillReceiveProps(nextProps) {
 //                       console.log("receive");
@@ -100,15 +101,19 @@ export default class PullRefresh extends Component {
         );
 	}
 
+
+
     render() {
+        console.log("mockDatalength => " + MockData.items.length);
         return (
           <View style={styles.container}>
               <PullList
                   style={{}}
+
                   onPullRelease={this.onPullRelease}
                    topIndicatorRender={this.topIndicatorRender} topIndicatorHeight={60}
-                  renderHeader={this.renderHeader}
-                  dataSource={this.state.list}
+                   enableEmptySections={true}
+                  dataSource={new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(MockData.items)}
                   pageSize={5}
                   initialListSize={5}
                   renderRow={this.renderRow}
@@ -120,17 +125,12 @@ export default class PullRefresh extends Component {
         );
     }
 
-    renderHeader() {
-      return (
-          <View>
-          </View>
-      );
-    }
+
 
     // 返回具体的cell
         renderRow(rowData,sectionID,rowID,highlightRow){
                return(
-                  <ArticleCell date={rowData.date} title={rowData.title} subTitle={rowData.subTitle} author={rowData.author} avatar={rowData.avatar} imgUrl={rowData.imgUrl}></ArticleCell>
+                        <ArticleCell navigation={this.props.navigation} data={rowData}></ArticleCell>
                );
 
         }
@@ -154,7 +154,8 @@ export default class PullRefresh extends Component {
 
         setTimeout(() => {
             this.setState({
-                list: this.state.list.cloneWithRows(this.dataSource)
+                list: this.state.list.cloneWithRows(this.dataSource),
+                count: this.state.count + 1
             });
         }, 1000);
     }

@@ -26,7 +26,7 @@ import BarcodeScanner from './MyBarcodeScanner';
 import TopScrollView from '../business/home/TopScrollView';
 import KittyNavBar from '../business/home/KittyNavBar';
 import ModuleList from '../business/home/ModuleList';
-import HomeMidListView from '../business/home/HomeMidListView';
+import HomeListView from '../business/home/HomeListView';
 
 
 import AlertModal from '../common/AlertModal';
@@ -54,7 +54,8 @@ export default class KittyHome extends Component {
             <View style = {{flex: 1}}>
              {/* <AlertModal ref="alertModal" visible={true}></AlertModal>*/}
               <KittyNavBar navigation={this.props.navigation}> </KittyNavBar>
-              <HomeMidListView navigation={this.props.navigation}></HomeMidListView>
+             {/* <HomeMidListView navigation={this.props.navigation}></HomeMidListView>*/}
+              <HomeListView navigation={this.props.navigation}></HomeListView>
             </View>
         );
       }

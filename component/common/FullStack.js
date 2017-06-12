@@ -48,7 +48,9 @@ class Tech1 extends Component {
     }
     fetchDataTech1() {
         var data = [{"1": "_1"}, {"2": "_2"}];
+        setTimeout(() => {
         this._setState(data);
+        }, 5000)
     }
     componentDidMount() {
         this.fetchDataTech1();
@@ -62,12 +64,13 @@ class Tech1 extends Component {
            }, 2000);
        }
    render() {
+   console.log("maockdata => " +this.state.loading);
      return (
            <View style = {styles.container}>
                  {
                     this.state.loading ? <LoadingPage></LoadingPage> :  (null)
                  }
-                 <PullRefresh data = {MockData} isLastPage={true}  onPullRelease={this._onPullRelease.bind(this)}></PullRefresh>
+                 <PullRefresh data = {MockData} onPullRelease={this._onPullRelease.bind(this)}></PullRefresh>
            </View>
 
      );

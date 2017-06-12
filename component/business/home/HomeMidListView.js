@@ -55,6 +55,7 @@ export default class HomeMidListView extends Component {
      }
     onPullRelease(resolve) {
 		//do something
+		console.log("cbam")
 		setTimeout(() => {
             resolve();
         }, 2000);
@@ -66,6 +67,7 @@ export default class HomeMidListView extends Component {
          this._setState(Article);
     }
     _setState(newState) {
+
          this.setState({
                list: this.state.list.cloneWithRows(this.dataSource),
                isLastPage: newState.isLastPage
@@ -100,11 +102,14 @@ export default class HomeMidListView extends Component {
 	}
 
     render() {
+        console.log("render PullList");
+
         return (
           <View style={styles.container}>
 
               <PullList
                   style={{}}
+                  enableEmptySections={true}
                   onPullRelease={this.onPullRelease}
                    topIndicatorRender={this.topIndicatorRender} topIndicatorHeight={60}
                   renderHeader={this.renderHeader}
@@ -143,7 +148,7 @@ export default class HomeMidListView extends Component {
 
     // 返回具体的cell
         renderRow(rowData,sectionID,rowID,highlightRow){
-               console.log("rowData => " + rowData.title);
+
                return(
                         <HomeListCell data={rowData}></HomeListCell>
                     );

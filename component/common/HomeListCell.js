@@ -42,9 +42,10 @@ export default class HomeListCell extends Component {
              this.setState({
                  "title": newState.title,
                   "img": newState.img,
-                  "date": newState.date,
-                  "favorite": newState.favorite,
-                  "author":newState.author
+                  "subTitle": newState.summary,
+                  "date": newState.published_at,
+                  "favorite": newState.counters.favorite,
+                  "author":newState.user.name
              })
         }
         _processDate(date) {

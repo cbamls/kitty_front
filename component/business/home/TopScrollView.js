@@ -25,8 +25,6 @@ var {width} = Dimensions.get('window');
 // 引入计时器类库
 import TimerMixin from 'react-timer-mixin';
 
-// 引入json数据
-var ImageData = require('./ImageData.json');
 
 
 var TopScrollView = React.createClass({
@@ -38,7 +36,7 @@ var TopScrollView = React.createClass({
     getDefaultProps(){
        return{
           // 每隔多少时间
-          duration: 1000
+          duration: 2000
        }
     },
 
@@ -94,6 +92,7 @@ var TopScrollView = React.createClass({
 
     // 实现一些复杂的操作
     componentDidMount(){
+        console.log("didmout");
        // 开启定时器
        this.startTimer();
     },
@@ -102,6 +101,7 @@ var TopScrollView = React.createClass({
     startTimer(){
          // 1. 拿到scrollView
         var scrollView = this.refs.scrollView;
+        let ImageData = this.props.data;
         var imgCount = ImageData.data.length;
 
          // 2.添加定时器  this.timer --->可以理解成一个隐式的全局变量
@@ -134,14 +134,14 @@ var TopScrollView = React.createClass({
         // 数组
         var allImage = [];
         // 拿到图像数组
-        var imgsArr = ImageData.data;
+        var imgsArr = this.props.data.data;
         // 遍历
         for(var i=0; i<imgsArr.length; i++){
             // 取出单独的每一个对象
             var imgItem = imgsArr[i];
             // 创建组件装入数组
             allImage.push(
-                <Image key={i} source={{uri: imgItem.img}} style={{width:width, height:120}}/>
+                <Image key={i} source={{uri: imgItem.cover}} style={{width:width, height:120}}/>
             );
         }
         // 返回数组
@@ -154,7 +154,7 @@ var TopScrollView = React.createClass({
        var indicatorArr = [];
        var style;
        // 拿到图像数组
-       var imgsArr = ImageData.data;
+       var imgsArr = this.props.data.data;
        // 遍历
        for(var i=0; i<imgsArr.length; i++){
 
@@ -191,7 +191,7 @@ var TopScrollView = React.createClass({
 
 const styles = StyleSheet.create({
   container:{
-
+       height: 120
   },
 
   pageViewStyle:{
