@@ -16,7 +16,9 @@ import {
   Text,
   View,
   ScrollView,
-  Image
+  Image,
+  InteractionManager,
+  TouchableOpacity
 } from 'react-native';
 
 var Dimensions = require('Dimensions');
@@ -47,12 +49,11 @@ var TopScrollView = React.createClass({
           currentPage: 0
        }
     },
-    componentWillUnMount() {
-        this.timer && clearTimeout(this.timer);
-    },
+
     render(){
        return(
           <View style={styles.container}>
+
              <ScrollView
                  ref="scrollView"
                  horizontal={true}
@@ -68,7 +69,12 @@ var TopScrollView = React.createClass({
                  onScrollEndDrag={this.onScrollEndDrag}
              >
                {this.renderAllImage()}
+
              </ScrollView>
+            <View style={styles.titleViewStyle}>
+                <Text>               2324
+</Text>
+             </View>
             {/*返回指示器*/}
              <View style={styles.pageViewStyle}>
                {/*返回5个圆点*/}
@@ -77,7 +83,11 @@ var TopScrollView = React.createClass({
           </View>
        );
     },
-
+ _toDetail(url) {
+    let uri = url.slice(url.indexOf("http://36kr.com/p/") + "http://36kr.com/p/".length, url.indexOf(".html"));
+    console.log("_toDetail => " + url);
+    this.props.navigation.navigate('ArticleDetail', {article_id: uri});
+  },
     // 调用开始拖拽
     onScrollBeginDrag(){
        // 停止定时器
@@ -93,7 +103,6 @@ var TopScrollView = React.createClass({
     // 实现一些复杂的操作
     componentDidMount(){
         console.log("didmout");
-       // 开启定时器
        this.startTimer();
     },
 
@@ -101,9 +110,8 @@ var TopScrollView = React.createClass({
     startTimer(){
          // 1. 拿到scrollView
         var scrollView = this.refs.scrollView;
-        let ImageData = this.props.data;
-        var imgCount = ImageData.data.length;
-
+        var imgCount = this.props.data.data.length == 0? 4 : this.props.data.data.length;
+        console.log("imgCount => " + imgCount);
          // 2.添加定时器  this.timer --->可以理解成一个隐式的全局变量
         this.timer = this.setInterval(function () {
             // 2.1 设置圆点
@@ -122,6 +130,7 @@ var TopScrollView = React.createClass({
 
             // 2.4 让scrollView滚动起来
             var offsetX = activePage * width;
+            console.log("offsetX" +offsetX);
             scrollView.scrollResponderScrollTo({x:offsetX, y:0, animated:true});
 
          }, this.props.duration);
@@ -134,16 +143,17 @@ var TopScrollView = React.createClass({
         // 数组
         var allImage = [];
         // 拿到图像数组
+        var that = this;
         var imgsArr = this.props.data.data;
         // 遍历
-        for(var i=0; i<imgsArr.length; i++){
-            // 取出单独的每一个对象
-            var imgItem = imgsArr[i];
-            // 创建组件装入数组
-            allImage.push(
-                <Image key={i} source={{uri: imgItem.cover}} style={{width:width, height:120}}/>
-            );
-        }
+        imgsArr.map((imgItem) => {
+             allImage.push(
+                             <TouchableOpacity activeOpacity={0.5} onPress={()=>{that._toDetail(imgItem.url)}}>
+                                <Image source={{uri: imgItem.cover}} style={{width:width, height:120}}/>
+                            </TouchableOpacity>
+                        );
+        })
+
         // 返回数组
         return allImage;
     },
@@ -192,6 +202,11 @@ var TopScrollView = React.createClass({
 const styles = StyleSheet.create({
   container:{
        height: 120
+  },titleViewStyle: {
+     // 定位
+          position:'absolute',
+          top: 0,
+          opacity: 1,
   },
 
   pageViewStyle:{

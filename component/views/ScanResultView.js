@@ -32,7 +32,10 @@ export default class ScanResultView extends Component {
        let judge = typeof(this.props.navigation.state.params.uri)=="string";
       return (
        <View style={styles.container}>
+      {
+                 this.state.isLoading ? <LoadingPage> </LoadingPage> : null
 
+               }
             {
                 judge ?
                  <WebView

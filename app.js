@@ -30,11 +30,12 @@ import FullStackView from './component/views/FullStackView';
 import KittyHome from './component/views/KittyHome';
 import Explore from './component/views/Explore';
 import Message from './component/views/Message';
+import ScanResultView from './component/views/ScanResultView';
 import Center from './component/views/Center';
 import KittyLogin from './component/views/KittyLogin';
 import HomeMidListView from './component/business/home/HomeMidListView';
 import BarcodeScanner from './component/views/MyBarcodeScanner';
-
+import ArticleDetail from './component/views/ArticleDetail';
 import { StackNavigator} from 'react-navigation';
 
 /*首屏路由注册*/
@@ -70,23 +71,30 @@ const MyApp = TabNavigator({
       }
   },
   tabBarPosition : 'bottom',
-  swipeEnabled :false
+  swipeEnabled :false,
+
 
 });
 
 
 
 const SimpleApp = StackNavigator({
+ LaunchImage: { screen: LaunchImage },
     MyApp: {screen: MyApp},
      HomeMidListView: {
         screen: HomeMidListView
       },
   initialRouteName : {screen: LaunchImage},
-  LaunchImage: { screen: LaunchImage },
+
 FullStackView:{
    screen: FullStackView
 },
-
+ScanResultView: {
+    screen: ScanResultView
+},
+ArticleDetail: {
+    screen: ArticleDetail
+},
   SearchDetail: {
     path: 'people/:name',
     screen: SearchDetail

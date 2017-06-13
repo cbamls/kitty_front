@@ -30,6 +30,7 @@ var Article = require('./Article.json'); // 数组
 import TopScrollView from './TopScrollView';
 import ModuleList from './ModuleList';
 import ArticleCell from '../../common/ArticleCell';
+import CommonScroll from '../../common/CommonScroll';
 
 export default class HomeMidListView extends Component {
 
@@ -190,11 +191,12 @@ export default class HomeMidListView extends Component {
     }
 
     renderHeader() {
-    //console.log("renderHeader");
+    //console.log("renderHeader => " + this.state.jsonData.data.length);
       return (
           <View>
              {/* <TopScrollView data = {this.state.jsonData}></TopScrollView>*/}
-            <TopScrollView data = {this.state.jsonData}></TopScrollView>
+            <TopScrollView navigation={this.props.navigation} data = {this.state.jsonData}></TopScrollView>
+            {/*<CommonScroll navigation={this.props.navigation} data = {this.state.jsonData}></CommonScroll>*/}
               <ModuleList navigation={this.props.navigation}></ModuleList>
               <View style={styles.TopListStyle}>
               	<View style={styles.TopLeftStyle}>
