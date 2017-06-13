@@ -72,8 +72,7 @@ var TopScrollView = React.createClass({
 
              </ScrollView>
             <View style={styles.titleViewStyle}>
-                <Text>               2324
-</Text>
+
              </View>
             {/*返回指示器*/}
              <View style={styles.pageViewStyle}>

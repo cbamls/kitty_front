@@ -27,12 +27,20 @@ export default class ScanResultView extends Component {
              isLoading: true
           };
       }
+      componentDidMount() {
+         let judge = typeof(this.props.navigation.state.params.uri)=="string";
+               if(!judge) {
+                    this.setState({
+                        isLoading: false
+                    })
+               }
+      }
     render() {
-        console.log("this. =======> " + (typeof(this.props.navigation.state.params.uri)=="string"));
        let judge = typeof(this.props.navigation.state.params.uri)=="string";
+
       return (
        <View style={styles.container}>
-      {
+               {
                  this.state.isLoading ? <LoadingPage> </LoadingPage> : null
 
                }
