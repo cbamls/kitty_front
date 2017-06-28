@@ -217,7 +217,7 @@ export default class HomeMidListView extends Component {
         _renderRow(rowData,sectionID,rowID,highlightRow){
                //console.log("renderRow")
                return(
-                        <ArticleCell navigation={this.props.navigation} data={rowData}></ArticleCell>
+                        <ArticleCell key={rowID} navigation={this.props.navigation} data={rowData}></ArticleCell>
                     );
 
         }
@@ -250,11 +250,11 @@ export default class HomeMidListView extends Component {
         return this.totalNumber !== this.dataSource.length;
     }
     _loadMore() {
-     console.log("loadMore +> " + this._hasMore() + this.state.isLoading);
+     //console.log("loadMore +> " + this._hasMore() + this.state.isLoading);
         if(!this._hasMore() || this.state.isLoading) {
             return ;
         }
-        console.log("loadMore and this.nextPage => " +this.nextPage);
+       // console.log("loadMore and this.nextPage => " +this.nextPage);
         if(this.isFirstLoad) {
             this.isFirstLoad = false;
             return ;

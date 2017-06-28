@@ -145,9 +145,9 @@ var TopScrollView = React.createClass({
         var that = this;
         var imgsArr = this.props.data.data;
         // 遍历
-        imgsArr.map((imgItem) => {
+        imgsArr.map((imgItem, index) => {
              allImage.push(
-                             <TouchableOpacity activeOpacity={0.5} onPress={()=>{that._toDetail(imgItem.url)}}>
+                             <TouchableOpacity key={index} activeOpacity={0.5} onPress={()=>{that._toDetail(imgItem.url)}}>
                                 <Image source={{uri: imgItem.cover}} style={{width:width, height:120}}/>
                             </TouchableOpacity>
                         );
