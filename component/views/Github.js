@@ -13,3 +13,11 @@ import {
 import FullStack from '../common/FullStack';
 import CommonNavBar from '../common/CommonNavBar';
 import { StackNavigator } from 'react-navigation';
+import TopMenu from '../common/TopMenu';
+export default class Github extends Component {
+    render() {
+        return (
+            <TopMenu></TopMenu>
+        )
+    }
+}

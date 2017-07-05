@@ -1,26 +1,25 @@
 /**
-* CopyRright (c)2014-2016 Haerbin Hearglobal Co.,Ltd
-* Project: kitty_front
-* Comments:
-* Author:cbam
-* Create Date:2017/6/4
-* Modified By:
-* Modified Date: 
-* Modified Reason: 
-*/
-import React, { Component } from 'react';
+ * CopyRright (c)2014-2016 Haerbin Hearglobal Co.,Ltd
+ * Project: kitty_front
+ * Comments:
+ * Author:cbam
+ * Create Date:2017/6/4
+ * Modified By:
+ * Modified Date:
+ * Modified Reason:
+ */
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 
 /**-------导入外部的组件类---------**/
 
 
-import { TabNavigator } from 'react-navigation';
-
+import {TabNavigator} from 'react-navigation';
 
 
 import SearchDetail from './component/business/home/SearchDetail';
@@ -36,76 +35,82 @@ import KittyLogin from './component/views/KittyLogin';
 import HomeMidListView from './component/business/home/HomeMidListView';
 import BarcodeScanner from './component/views/MyBarcodeScanner';
 import ArticleDetail from './component/views/ArticleDetail';
-import { StackNavigator} from 'react-navigation';
-
+import {StackNavigator} from 'react-navigation';
+import VideoDetail  from './component/views/VideoDetail'
+import Github from './component/views/Github';
 /*首屏路由注册*/
 const MyApp = TabNavigator({
-  KittyHome: {
-    screen: KittyHome,
-  },
-  Explore: {
-    screen: Explore,
-  },
-   Message: {
-      screen: Message,
+        KittyHome: {
+            screen: KittyHome,
+        },
+        Explore: {
+            screen: Explore,
+        },
+        Message: {
+            screen: Message,
+        },
+        Center: {
+            screen: Center,
+        }
     },
-     Center: {
-        screen: Center,
-      }
-},
 
 
- {
-  tabBarOptions: {
-    activeTintColor: '#e91e63',
-    showLabel:false,
-    showIcon : true,
-    labelStyle: {
-         fontSize: 10,
-    },
-    style: {
-        backgroundColor: '#2296F3',
-    },
-     tabStyle: {
-        height: 50,
-      }
-  },
-  tabBarPosition : 'bottom',
-  swipeEnabled :false,
+    {
+        tabBarOptions: {
+            activeTintColor: '#e91e63',
+            showLabel: false,
+            showIcon: true,
+            labelStyle: {
+                fontSize: 10,
+            },
+            style: {
+                backgroundColor: '#2296F3',
+            },
+            tabStyle: {
+                height: 50,
+            }
+        },
+        tabBarPosition: 'bottom',
+        swipeEnabled: false,
 
 
-});
-
+    });
 
 
 const SimpleApp = StackNavigator({
- LaunchImage: { screen: LaunchImage },
-    MyApp: {screen: MyApp},
-     HomeMidListView: {
-        screen: HomeMidListView
-      },
-  initialRouteName : {screen: LaunchImage},
+        LaunchImage: {screen: LaunchImage},
+        MyApp: {screen: MyApp},
+        HomeMidListView: {
+            screen: HomeMidListView
+        },
+        VideoDetail: {
+            screen: VideoDetail
+        },
+        initialRouteName: {screen: LaunchImage},
 
-FullStackView:{
-   screen: FullStackView
-},
-ScanResultView: {
-    screen: ScanResultView
-},
-ArticleDetail: {
-    screen: ArticleDetail
-},
-  SearchDetail: {
-    path: 'people/:name',
-    screen: SearchDetail
-  },
-  KittyLogin: {
-    screen: KittyLogin
-  },BarcodeScanner: {
-    screen: BarcodeScanner
-  }
+        FullStackView: {
+            screen: FullStackView
+        },
+        Github: {
+            screen: Github
+        },
+        ScanResultView: {
+            screen: ScanResultView
+        },
+        ArticleDetail: {
+            screen: ArticleDetail
+        },
+        SearchDetail: {
+            path: 'people/:name',
+            screen: SearchDetail
+        },
+        KittyLogin: {
+            screen: KittyLogin
+        }, BarcodeScanner: {
+            screen: BarcodeScanner
+        }
 
-},
- {headerMode :'none'} );
+    },
+    {headerMode: 'none'});
 
 export default SimpleApp;
