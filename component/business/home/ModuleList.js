@@ -51,7 +51,7 @@ export default class ModuleList extends Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
-                    this.props.navigation.navigate("VideoDetail")
+                    this.props.navigation.navigate("VideoDetail", {uri: "http://nenmbv.whlmsp.com/up/nenmb/video/20170211/589e6ade1c835.mp4"})
                 }}>
 
                     <View style={{alignItems: 'center'}}>
